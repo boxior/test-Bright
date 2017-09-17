@@ -1,0 +1,201 @@
+
+.slider
+    background-color: #1ab1ae
+    position: relative
+    width: 100%
+    max-width: 1600px
+    min-width: 800px
+    padding: 100px 0
+    margin: 0 auto
+    *
+        box-sizing: border-box 
+
+    &__content
+        position: relative
+        width: 100%
+
+    &__items
+        position: relative
+        padding: 100px 0
+        margin: 0 auto
+        overflow: hidden
+        width: 100%
+        height: 346px
+
+    &__item
+        position: absolute
+        display: inline-block
+        width: 146px
+        height: 146px
+        z-index: 1
+        &:first-child
+            left: calc(50% - 186px - 73px)
+        &:nth-child(2)
+            left: calc(50% - 73px)
+        &:nth-child(3)
+            left: calc(50% + 186px - 73px)
+        &:nth-child(4,5)
+            display: none
+
+    &__hidden
+        position: relative
+        width: 100%
+        height: 186px
+        top: -48px
+        display: block
+        overflow: hidden
+        border-radius: 0 0 45% 45%
+        border: 2px solid transparent
+            
+    &__circle
+        position: relative
+        box-sizing: border-box
+        display: block
+        width: 100%
+        height: 146px
+        border-radius: 50%
+        border: 5px solid #fff
+        &:hover
+            cursor: pointer
+
+    &__img
+        height: 156px
+        position: absolute
+        @extend %ham
+        bottom: -10px
+
+    &__nav
+        position: absolute
+        width: 100%
+        @extend %vam
+
+    &__button-left
+        padding: 0
+        background-color: #17afac
+        border-radius: 5px
+        color: #fff
+        border: 2px solid #fff
+        font-size: 24px
+        line-height: 66.84px
+        width: 150px
+        float: left
+        transform: perspective(600px) rotateY(45deg)
+        &:hover
+            cursor: pointer
+            background-color: #fff
+            color: #17afac
+
+    &__button-right
+        @extend .slider__button-left
+        float: right
+        transform: perspective(600px) rotateY(-45deg)
+
+.animateOutR
+    animation-name: animateOutR
+    animation-duration: $animate-time
+
+.animateInR
+    animation-name: animateInR
+    animation-duration: $animate-time
+
+.animate2R
+    animation-name: animate2R
+    animation-duration: $animate-time/2
+
+.animate3R
+    animation-name: animate3R
+    animation-duration: $animate-time/2
+
+@keyframes animateOutR
+    from
+        transform: scale(1)
+    to
+        transform: scale(2)
+
+@keyframes animateInR
+    0%
+        opacity: 0
+        left: -146px
+        transform: scale(2)
+    50%
+        opacity: 1
+        left: calc(50% - 186px - 73px - 146px)
+        transform: scale(1)
+    100%
+        left: calc(50% - 186px - 73px)
+
+@keyframes animate2R
+    from
+        left: calc(50% - 186px - 73px)
+    to
+        left: calc(50% - 73px)
+
+@keyframes animate3R
+    from
+        left: calc(50% - 73px)
+    to
+        left: calc(50% + 186px - 73px)
+        
+
+.leftR:nth-child(2)
+    left: calc(50% - 186px - 73px)
+
+.centerR:nth-child(3)
+    left: calc(50% - 73px)
+
+
+.animateOutL
+    animation-name: animateOutL
+    animation-duration: $animate-time
+
+.animateInL
+    animation-name: animateInL
+    animation-duration: $animate-time
+
+.animate2L
+    animation-name: animate2L
+    animation-duration: $animate-time/2
+
+.animate3L
+    animation-name: animate3L
+    animation-duration: $animate-time/2
+
+@keyframes animateOutL
+    from
+        // left: calc(50% - 186px - 73px)
+        // opacity: 1
+        transform: scale(1)
+    to
+        // left: -186px
+        // opacity: 0
+        transform: scale(2)
+
+@keyframes animateInL
+    0%
+        opacity: 0
+        left: 100%
+        transform: scale(2)
+    50%
+        opacity: 1
+        left: calc(50% + 186px - 73px + 146px)
+        transform: scale(1)
+    100%
+        left: calc(50% + 186px - 73px)
+
+@keyframes animate2L
+    from
+        left: calc(50% - 73px)
+    to
+        left: calc(50% - 186px - 73px)
+
+@keyframes animate3L
+    from
+        left: calc(50% + 186px - 73px)
+    to
+        left: calc(50% - 73px)
+
+.rightL:nth-child(2)
+    left: calc(50% + 186px - 73px)
+
+.centerL:nth-child(1)
+    left: calc(50% - 73px)
