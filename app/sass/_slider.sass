@@ -41,15 +41,19 @@
         z-index: 1
         user-select: none
         display: none
+        opacity: 0
         &:first-child
             left: calc(50% - 186px - 73px)
             display: inline-block
+            opacity: 1
         &:nth-child(2)
             left: calc(50% - 73px)
             display: inline-block
+            opacity: 1
         &:nth-child(3)
             left: calc(50% + 186px - 73px)
             display: inline-block
+            opacity: 1
         &:nth-child(4,5)
             display: none
 
@@ -154,11 +158,11 @@
         left: calc(50% + 186px - 73px)
         
 
-.leftR:nth-child(2)
-    left: calc(50% - 186px - 73px)
+// .leftR:nth-child(2)
+//     left: calc(50% - 186px - 73px)
 
-.centerR:nth-child(3)
-    left: calc(50% - 73px)
+// .centerR:nth-child(3)
+//     left: calc(50% - 73px)
 
 
 .animateOutL
@@ -207,8 +211,8 @@
     to
         left: calc(50% - 73px)
 
-.rightL:nth-child(2)
-    left: calc(50% + 186px - 73px)
+// .rightL:nth-child(2)
+//     left: calc(50% + 186px - 73px)
 
-.centerL:nth-child(1)
-    left: calc(50% - 73px)
+// .centerL:nth-child(1)
+//     left: calc(50% - 73px)

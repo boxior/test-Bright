@@ -8,7 +8,12 @@ $(function() { //стандартная функция JQuery при полно�
         countItem = 3, //количество слайдеров на странице
         timeAnime = 1000, //назначаем время анимаций в мс, должно быть равно переменной SASS $animate-time
         timePercent = timeAnime * 0.8, //80% для старта появления слайда
-        click = 0; // определяем по какой кнопке был клик, чтобы при быстром нажатии на левую и правую кнопку прокрутки небыло одновременных анимаций
+        click = 0, // определяем по какой кнопке был клик, чтобы при быстром нажатии на левую и правую кнопку прокрутки небыло одновременных анимаций
+        slPosLeft = item.eq(0).css('left'), //фиксируем позиции 3-й слайдеров
+        slPosCenter = item.eq(1).css('left'),
+        slPosRight = item.eq(2).css('left'); 
+        
+    
     // анимация при hover
     (function mouseEnterLeave() { 
         circle.mouseenter(function() {
@@ -38,12 +43,12 @@ $(function() { //стандартная функция JQuery при полно�
                 });
     }
     //слайдр прилетает
-    function sliderIn(eq1, eq2, eq3, eq1Class, eq1Anim, eq2Class, eq2Anim, animClass, 
+    function sliderIn(eq1, eq2, eq3, eq1Pos, eq1Anim, eq2Pos, eq2Anim, animClass, 
                     eq3LeftAfterAnim, eq2LeftAfterAnim, eq1LeftAfterAnim) { 
-        item.eq(eq1).addClass(eq1Class); // фиксируем позиции 2-х слайдов, что остаються после улетания 3-го
-        item.eq(eq2).addClass(eq2Class);
+        item.eq(eq1).css({left: eq1Pos}); // фиксируем позиции 2-х слайдов, что остаються после улетания 3-го
+        item.eq(eq2).css({left: eq2Pos});
         item.eq(eq3).css({display: 'inline-block'}) // анимируем улетающий слайд
-                    .addClass(animClass);
+                    .addClass(animClass)
                     if(click == 1) {
                         item.eq(eq3).prependTo(items);
                     }
@@ -71,8 +76,8 @@ $(function() { //стандартная функция JQuery при полно�
                     click = 0;
                     $(this).css({left: eq3LeftAfterAnim});
                     $(this).removeClass(animClass);
-                    item.eq(eq1).removeClass(eq1Class + ' ' + eq1Anim).css({left: eq1LeftAfterAnim});
-                    item.eq(eq2).removeClass(eq2Class + ' ' + eq2Anim).css({left: eq2LeftAfterAnim});
+                    item.eq(eq1).removeClass(eq1Anim).css({left: eq1LeftAfterAnim});
+                    item.eq(eq2).removeClass(eq2Anim).css({left: eq2LeftAfterAnim});
                     $(this).dequeue();
                 });
     }
@@ -83,7 +88,7 @@ $(function() { //стандартная функция JQuery при полно�
 
         sliderOut(2, '100%','animateOutR'); // функция улетания слайдера
 
-        setTimeout(sliderIn, timePercent, 0, 1, item.length-1, 'leftR', 'animate2R', 'centerR',
+        setTimeout(sliderIn, timePercent, 0, 1, item.length-1, slPosLeft, 'animate2R', slPosCenter,
                                         'animate3R', 'animateInR', 'calc(50% - 186px - 73px)',
                                         'calc(50% + 186px - 73px)', 'calc(50% - 73px)'); // функция прилетания слайдера
     });
@@ -94,7 +99,7 @@ $(function() { //стандартная функция JQuery при полно�
 
         sliderOut(0, '-186px', 'animateOutL'); // функция улетания слайда
 
-        setTimeout(sliderIn, timePercent, 1, 2, 3, 'centerL', 'animate2L', 'rightL',
+        setTimeout(sliderIn, timePercent, 1, 2, 3, slPosCenter, 'animate2L', slPosRight,
                                         'animate3L', 'animateInL', 'calc(50% + 186px - 73px)',
                                         'calc(50% - 73px)', 'calc(50% - 186px - 73px)'); // функция прилетания слайдера
     });
