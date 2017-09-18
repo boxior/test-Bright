@@ -40,16 +40,16 @@ $(function() { //стандартная функция JQuery при полно�
     //слайдр прилетает
     function sliderIn(eq1, eq2, eq3, eq1Class, eq1Anim, eq2Class, eq2Anim, animClass, 
                     eq3LeftAfterAnim, eq2LeftAfterAnim, eq1LeftAfterAnim) { 
-        item.eq(eq1).addClass(eq1Class);
+        item.eq(eq1).addClass(eq1Class); // фиксируем позиции 2-х слайдов, что остаються после улетания 3-го
         item.eq(eq2).addClass(eq2Class);
-        item.eq(eq3).css({display: 'inline-block'})
+        item.eq(eq3).css({display: 'inline-block'}) // анимируем улетающий слайд
                     .addClass(animClass);
                     if(click == 1) {
                         item.eq(eq3).prependTo(items);
                     }
 
         var C = true; // чтобы функция setInterval сработала только один раз 
-        function calcPosIn() {
+        function calcPosIn() { //определяем позицию прилетающего слайда и анимируем остальные слайды
             if(click == 1) {
                 if( item.eq(item.length-1).offset().left >= item.eq(0).offset().left - 146 && C == true ) { 
                     item.eq(eq1).addClass(eq1Anim); 
@@ -59,15 +59,15 @@ $(function() { //стандартная функция JQuery при полно�
             }
             if(click == 2) {
                 if( item.eq(3).offset().left <= item.eq(2).offset().left + 146 && C == true ) { 
-                    item.eq(1).addClass('animate2L'); 
-                    item.eq(2).addClass('animate3L'); 
+                    item.eq(1).addClass(eq1Anim); 
+                    item.eq(2).addClass(eq2Anim); 
                     C = false;
                 }            
             }
         }
         setInterval(calcPosIn);
 
-        item.eq(eq3).animate({opacity: '1'}, timeAnime).queue(function() {
+        item.eq(eq3).animate({opacity: '1'}, timeAnime).queue(function() { // удаляем классы анимаций
                     click = 0;
                     $(this).css({left: eq3LeftAfterAnim});
                     $(this).removeClass(animClass);
@@ -81,7 +81,7 @@ $(function() { //стандартная функция JQuery при полно�
         if(click != 0) { return false; }
         click = 1;
 
-        sliderOut(2, '100%','animateOutR'); // функция улетания сайдера
+        sliderOut(2, '100%','animateOutR'); // функция улетания слайдера
 
         setTimeout(sliderIn, timePercent, 0, 1, item.length-1, 'leftR', 'animate2R', 'centerR',
                                         'animate3R', 'animateInR', 'calc(50% - 186px - 73px)',
@@ -92,7 +92,7 @@ $(function() { //стандартная функция JQuery при полно�
         if(click != 0) { return false; }
         click = 2;
 
-        sliderOut(0, '-186px', 'animateOutL'); // параметры eq(), leftPos, animateClass
+        sliderOut(0, '-186px', 'animateOutL'); // функция улетания слайда
 
         setTimeout(sliderIn, timePercent, 1, 2, 3, 'centerL', 'animate2L', 'rightL',
                                         'animate3L', 'animateInL', 'calc(50% + 186px - 73px)',
