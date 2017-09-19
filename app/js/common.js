@@ -9,30 +9,32 @@ $(function() { //стандартная функция JQuery при полно�
         timeAnime = 1000, //назначаем время анимаций в мс, должно быть равно переменной SASS $animate-time
         timePercent = timeAnime * 0.8, //80% для старта появления слайда
         click = 0, // определяем по какой кнопке был клик, чтобы при быстром нажатии на левую и правую кнопку прокрутки небыло одновременных анимаций
-        slPosLeft = item.eq(0).css('left'), //фиксируем позиции 3-й слайдеров
+        slPosLeft = item.eq(0).css('left'), //фиксируем позиции 3-x слайдеров
         slPosCenter = item.eq(1).css('left'),
-        slPosRight = item.eq(2).css('left'); 
-        
+        slPosRight = item.eq(2).css('left'),
+        itemWidth = item.width(),
+        itemMarginRight = 40,
+        step = itemWidth + itemMarginRight + 'px'; 
     
     // анимация при hover
-    (function mouseEnterLeave() { 
-        circle.mouseenter(function() {
-        if(click > 0) return false; //если работает анимация,- hover не сработает
-            $(this).find('img').css({bottom: '0'})
-                                .animate({bottom: '-2px'}, 100);
-        });
-        circle.mouseleave(function() {
-            if(click > 0) return false;
-            $(this).find('img').css({bottom: '-10px'});
+    // (function mouseEnterLeave() { 
+    //     circle.mouseenter(function() {
+    //     if(click > 0) return false; //если работает анимация,- hover не сработает
+    //         $(this).find('img').css({bottom: '0'})
+    //                             .animate({bottom: '-2px'}, 100);
+    //     });
+    //     circle.mouseleave(function() {
+    //         if(click > 0) return false;
+    //         $(this).find('img').css({bottom: '-10px'});
                                 
-        });
-    }());
+    //     });
+    // }());
     //слайдер улетает
     function sliderOut(eq, leftPos, animateClass) {  
         item = $('.slider__item'), //чтобы перезаписывался порядок слайдов
         items = $('.slider__items');        
         item.eq(eq).addClass(animateClass);
-        item.eq(eq).animate({'left': leftPos, opacity: '0'}, timeAnime)
+        item.eq(eq).animate({left: leftPos, opacity: '0'}, timeAnime)
                 .fadeOut()
                 .queue(function() {
                     $(this).removeClass(animateClass);
@@ -56,14 +58,14 @@ $(function() { //стандартная функция JQuery при полно�
         var C = true; // чтобы функция setInterval сработала только один раз 
         function calcPosIn() { //определяем позицию прилетающего слайда и анимируем остальные слайды
             if(click == 1) {
-                if( item.eq(item.length-1).offset().left >= item.eq(0).offset().left - 146 && C == true ) { 
+                if( item.eq(item.length-1).offset().left >= item.eq(0).offset().left - itemWidth && C == true ) { 
                     item.eq(eq1).addClass(eq1Anim); 
                     item.eq(eq2).addClass(eq2Anim); 
                     C = false;
                 }
             }
             if(click == 2) {
-                if( item.eq(3).offset().left <= item.eq(2).offset().left + 146 && C == true ) { 
+                if( item.eq(3).offset().left <= item.eq(2).offset().left + itemWidth && C == true ) { 
                     item.eq(1).addClass(eq1Anim); 
                     item.eq(2).addClass(eq2Anim); 
                     C = false;
@@ -89,19 +91,18 @@ $(function() { //стандартная функция JQuery при полно�
         sliderOut(2, '100%','animateOutR'); // функция улетания слайдера
 
         setTimeout(sliderIn, timePercent, 0, 1, item.length-1, slPosLeft, 'animate2R', slPosCenter,
-                                        'animate3R', 'animateInR', 'calc(50% - 186px - 73px)',
-                                        'calc(50% + 186px - 73px)', 'calc(50% - 73px)'); // функция прилетания слайдера
+                                        'animate3R', 'animateInR', slPosLeft,
+                                       slPosRight, slPosCenter); // функция прилетания слайдера
     });
     //клик по левой кнопке
     left.on('click', function() { 
         if(click != 0) { return false; }
         click = 2;
 
-        sliderOut(0, '-186px', 'animateOutL'); // функция улетания слайда
+        sliderOut(0, '-' + step, 'animateOutL'); // функция улетания слайда
 
         setTimeout(sliderIn, timePercent, 1, 2, 3, slPosCenter, 'animate2L', slPosRight,
-                                        'animate3L', 'animateInL', 'calc(50% + 186px - 73px)',
-                                        'calc(50% - 73px)', 'calc(50% - 186px - 73px)'); // функция прилетания слайдера
+                                        'animate3L', 'animateInL', slPosRight,
+                                        slPosCenter, slPosLeft); // функция прилетания слайдера
     });
-
 });
