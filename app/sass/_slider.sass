@@ -53,11 +53,11 @@
         box-sizing: border-box
         width: 100%
         height: 186px
-        top: -42px
+        top: -44px
         display: block
         overflow: hidden
-        border-radius: 0 0 45% 45%
-        border: 2px solid transparent
+        border-radius: 0 0 49% 49% / 0 0 38% 38%
+        transition: top .2s ease-out
             
     &__circle
         position: relative
@@ -68,12 +68,17 @@
         border-radius: 50%
         border: 2px solid #fff
         transition: border .2s ease-out
+
         &:hover
             cursor: pointer
             border: 5px solid #fff
             img
                 bottom: 5px
-                
+                // animation-timing-function: ease-out
+                // animation-fill-mode: forwards
+                // animation-name: bot
+                // animation-duration: .4s
+                // animation-direction: alternate
 
     &__img
         height: 156px
@@ -108,6 +113,14 @@
         @extend .slider__button-left
         float: right
         transform: perspective(600px) rotateY(-45deg)
+
+@keyframes bot 
+    0%
+        bottom: -10px
+    50% 
+        bottom: 5px
+    100%
+        bottom: 3px
 
 .animateOutR
     animation-name: animateOutR
